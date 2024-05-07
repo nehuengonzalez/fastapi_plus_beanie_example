@@ -1,0 +1,33 @@
+version: '3'
+services:
+     mongodb:
+        image: mongo:5.0
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=tasked
+            - MONGO_INITDB_ROOT_PASSWORD=tasked
+        volumes:
+          - mongodbdata:/data/db
+        ports:
+            - 27017:27017
+     things_service:
+        image: unclcd/things_service:latest
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+        environment:
+            MONGO_HOST: mongodb
+            MONGO_PORT: 27017
+            MONGO_USER: tasked
+            MONGO_PASSWORD: tasked
+            MONGO_DB_NAME: things_db
+        ports:
+            - 9002:80
+            - 9003:443
+
+volumes:
+    mongodbdata:
