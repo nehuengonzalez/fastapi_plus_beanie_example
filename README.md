@@ -5,7 +5,9 @@ minimum fastapi microservice using beanie as odm
 To test this example:
 
   ./build.sh
+  
   cd test/
+  
   docker stack deploy -c docker_comose.yml
 
 
